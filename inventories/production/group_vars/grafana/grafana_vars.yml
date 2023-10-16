@@ -1,0 +1,19 @@
+---
+install: false
+admin_user: "{{ grafana_user }}"
+admin_password: "{{ grafana_password }}"
+datasource_list:
+  - name: 'Prometheus'
+    type: 'prometheus'
+    access: 'proxy'
+    url: 'https://prometheus.mycorp.com'
+    is_default: true
+    tls_skip_verify: true
+folder_list:
+  - title: 'Alerts'
+  - title: 'Jenkins'
+  - title: 'Kubernetes'
+  - title: 'Gerrit'
+  - title: 'AWS'
+  - title: 'Nvidia'
+  - title: 'Build status'
