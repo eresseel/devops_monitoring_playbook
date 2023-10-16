@@ -1,0 +1,3145 @@
+{
+    "__inputs": [
+      {
+        "name": "DS_DS_PROMETHEUS",
+        "label": "DS_PROMETHEUS",
+        "description": "",
+        "type": "datasource",
+        "pluginId": "prometheus",
+        "pluginName": "Prometheus"
+      }
+    ],
+    "__elements": {},
+    "__requires": [
+      {
+        "type": "grafana",
+        "id": "grafana",
+        "name": "Grafana",
+        "version": "9.5.2"
+      },
+      {
+        "type": "panel",
+        "id": "piechart",
+        "name": "Pie chart",
+        "version": ""
+      },
+      {
+        "type": "datasource",
+        "id": "prometheus",
+        "name": "Prometheus",
+        "version": "1.0.0"
+      },
+      {
+        "type": "panel",
+        "id": "timeseries",
+        "name": "Time series",
+        "version": ""
+      }
+    ],
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "Monitors Kubernetes cluster using Prometheus. Shows overall cluster or Node CPU / Memory / Network/ Filesystem usage as well as individual pod, containers statistics. Uses cAdvisor and kube-state metrics only.",
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "gnetId": 15398,
+    "graphTooltip": 0,
+    "id": null,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 2127,
+        "panels": [],
+        "title": "Overview",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_DS_PROMETHEUS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "left",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 13,
+          "w": 17,
+          "x": 0,
+          "y": 1
+        },
+        "id": 2132,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true
+          },
+          "timezone": [
+            ""
+          ],
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.3.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"aidrive-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "aidrive-X-gpu",
+            "range": true,
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"annotationloader-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "annotationloader",
+            "range": true,
+            "refId": "B"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"scorpio-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "scorpio-X-gpu",
+            "range": true,
+            "refId": "C"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"ros-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "ros-X-gpu",
+            "range": true,
+            "refId": "D"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"aidrive-build-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "aidrive-build",
+            "range": true,
+            "refId": "E"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"aisim-build-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "aisim-build",
+            "range": true,
+            "refId": "F"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"aisim-coverage-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "aisim-coverage",
+            "range": true,
+            "refId": "G"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"preproc-.*-cpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "preproc-X-cpu",
+            "range": true,
+            "refId": "H"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"bev-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "bev",
+            "range": true,
+            "refId": "I"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"hdmap.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "hdmap",
+            "range": true,
+            "refId": "J"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"trafficsign-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "trafficsign-X-gpu",
+            "range": true,
+            "refId": "K"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"cerberus.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "cerberus",
+            "range": true,
+            "refId": "L"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"roadmodel-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "roadmodel-X-gpu",
+            "range": true,
+            "refId": "M"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"ssd-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "ssd-X-gpu",
+            "range": true,
+            "refId": "N"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"pytorch-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "pytorch-X-gpu",
+            "range": true,
+            "refId": "O"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"backend-postprocess.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "backend-postprocess",
+            "range": true,
+            "refId": "P"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"field-test-postprocess.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "field-test-postprocess",
+            "range": true,
+            "refId": "Q"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"bbox3d-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "bbox-X-gpu",
+            "range": true,
+            "refId": "R"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"annotationloader.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "annotationloader",
+            "range": true,
+            "refId": "S"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"pseudo-lidar-annotate.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "pseudo-lidar-annotate",
+            "range": true,
+            "refId": "T"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"pseudo_lidar_annotate.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "pseudo-lidar-annotate",
+            "range": true,
+            "refId": "U"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"lidar-annotate.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "lidar-annotate",
+            "range": true,
+            "refId": "V"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"lidar-autoannot.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "lidar-autoannot",
+            "range": true,
+            "refId": "W"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"tl2d-detector.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "tl2d-detector",
+            "range": true,
+            "refId": "X"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"tl3d-detector.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "tl3d-detector",
+            "range": true,
+            "refId": "Y"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"saaai.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "saaai",
+            "range": true,
+            "refId": "Z"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"autotagger.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "autotagger",
+            "range": true,
+            "refId": "AA"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"dcp-rule-execution.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "dcp-rule-execution",
+            "range": true,
+            "refId": "AB"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"bevdepth-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "bevdepth",
+            "range": true,
+            "refId": "AC"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"flir-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "flir-X-gpu",
+            "range": true,
+            "refId": "AD"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"conan-to-saadaa.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "conan-to-saadaa",
+            "range": true,
+            "refId": "AE"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"realityfilter.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "realityfilter",
+            "range": true,
+            "refId": "AF"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"infra-smoke-test.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "infra-smoke-test",
+            "range": true,
+            "refId": "AG"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"run-aa.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "run-aa",
+            "range": true,
+            "refId": "AH"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"autoqc.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "autoqc",
+            "range": true,
+            "refId": "AI"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"autotag.*\",container=\"autotag\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "autotag",
+            "range": true,
+            "refId": "AJ"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"leadcar.*\",container=\"leadcar\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "leadcar",
+            "range": true,
+            "refId": "AK"
+          }
+        ],
+        "title": "CPU usage per podtemplate",
+        "transformations": [],
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_DS_PROMETHEUS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": [],
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 13,
+          "w": 7,
+          "x": 17,
+          "y": 1
+        },
+        "id": 2133,
+        "options": {
+          "legend": {
+            "displayMode": "list",
+            "placement": "right",
+            "showLegend": true,
+            "values": [
+              "percent"
+            ]
+          },
+          "pieType": "donut",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.3.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"aidrive-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "aidrive-X-gpu",
+            "range": true,
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"annotationloader-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "annotationloader",
+            "range": true,
+            "refId": "B"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"scorpio-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "scorpio-X-gpu",
+            "range": true,
+            "refId": "C"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"ros-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "ros-X-gpu",
+            "range": true,
+            "refId": "D"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"aidrive-build-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "aidrive-build",
+            "range": true,
+            "refId": "E"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"aisim-build-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "aisim-build",
+            "range": true,
+            "refId": "F"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"aisim-coverage-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "aisim-coverage",
+            "range": true,
+            "refId": "G"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"preproc-.*-cpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "preproc-X-cpu",
+            "range": true,
+            "refId": "H"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"bev-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "bev",
+            "range": true,
+            "refId": "I"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"hdmap.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "hdmap",
+            "range": true,
+            "refId": "J"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"trafficsign-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "trafficsign-X-gpu",
+            "range": true,
+            "refId": "K"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"cerberus.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "cerberus",
+            "range": true,
+            "refId": "L"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"roadmodel-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "roadmodel-X-gpu",
+            "range": true,
+            "refId": "M"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"ssd-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "ssd-X-gpu",
+            "range": true,
+            "refId": "N"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"pytorch-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "pytorch-X-gpu",
+            "range": true,
+            "refId": "O"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"backend-postprocess.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "backend-postprocess",
+            "range": true,
+            "refId": "P"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"field-test-postprocess.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "field-test-postprocess",
+            "range": true,
+            "refId": "Q"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"bbox3d-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "bbox-X-gpu",
+            "range": true,
+            "refId": "R"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"annotationloader.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "annotationloader",
+            "range": true,
+            "refId": "S"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"pseudo-lidar-annotate.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "pseudo-lidar-annotate",
+            "range": true,
+            "refId": "T"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"pseudo_lidar_annotate.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "pseudo-lidar-annotate",
+            "range": true,
+            "refId": "U"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"lidar-annotate.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "lidar-annotate",
+            "range": true,
+            "refId": "V"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"lidar-autoannot.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "lidar-autoannot",
+            "range": true,
+            "refId": "W"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"tl2d-detector.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "tl2d-detector",
+            "range": true,
+            "refId": "X"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"tl3d-detector.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "tl3d-detector",
+            "range": true,
+            "refId": "Y"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"saaai.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "saaai",
+            "range": true,
+            "refId": "Z"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"autotagger.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "autotagger",
+            "range": true,
+            "refId": "AA"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"dcp-rule-execution.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "dcp-rule-execution",
+            "range": true,
+            "refId": "AB"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"bevdepth-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "bevdepth",
+            "range": true,
+            "refId": "AC"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"flir-.*-gpu-.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "flir-X-gpu",
+            "range": true,
+            "refId": "AD"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"conan-to-saadaa.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "conan-to-saadaa",
+            "range": true,
+            "refId": "AE"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"realityfilter.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "realityfilter",
+            "range": true,
+            "refId": "AF"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"infra-smoke-test.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "infra-smoke-test",
+            "range": true,
+            "refId": "AG"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"run-aa.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "run-aa",
+            "range": true,
+            "refId": "AH"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"autoqc.*\",container=\"jnlp\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "autoqc",
+            "range": true,
+            "refId": "AI"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"autotag.*\",container=\"autotag\",instance=~\"^$Node$\"}[$__rate_interval])) by (container_cpu_usage_seconds_total)",
+            "hide": false,
+            "legendFormat": "autotag",
+            "range": true,
+            "refId": "AJ"
+          }
+        ],
+        "title": "CPU usage per podtemplate",
+        "transformations": [],
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_DS_PROMETHEUS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "left",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "bytes"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 13,
+          "w": 17,
+          "x": 0,
+          "y": 14
+        },
+        "id": 2131,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true
+          },
+          "timezone": [
+            ""
+          ],
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.3.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",id!=\"/\",pod=~\"aidrive-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "aidrive-X-gpu",
+            "range": true,
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"annotationloader-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "annotationloader",
+            "range": true,
+            "refId": "B"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"scorpio-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "scorpio-X-gpu",
+            "range": true,
+            "refId": "C"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"ros-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "ros-X-gpu",
+            "range": true,
+            "refId": "D"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"aidrive-build-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "aidrive-build",
+            "range": true,
+            "refId": "E"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"aisim-build-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "aisim-build",
+            "range": true,
+            "refId": "F"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"aisim-coverage-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "aisim-coverage",
+            "range": true,
+            "refId": "G"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"preproc-.*-cpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "preproc-X-cpu",
+            "range": true,
+            "refId": "H"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"bev-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "bev",
+            "range": true,
+            "refId": "I"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"hdmap.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "hdmap",
+            "range": true,
+            "refId": "J"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"trafficsign-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "trafficsign-X-gpu",
+            "range": true,
+            "refId": "K"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"cerberus.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "cerberus",
+            "range": true,
+            "refId": "L"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"roadmodel-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "roadmodel-X-gpu",
+            "range": true,
+            "refId": "M"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"ssd-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "ssd-X-gpu",
+            "range": true,
+            "refId": "N"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"pytorch-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "pytorch-X-gpu",
+            "range": true,
+            "refId": "O"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"backend-postprocess.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "backend-postprocess",
+            "range": true,
+            "refId": "P"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"field-test-postprocess.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "field-test-postprocess",
+            "range": true,
+            "refId": "Q"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"bbox3d-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "bbox-X-gpu",
+            "range": true,
+            "refId": "R"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"annotationloader.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "annotationloader",
+            "range": true,
+            "refId": "S"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"pseudo-lidar-annotate.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "pseudo-lidar-annotate",
+            "range": true,
+            "refId": "T"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"pseudo_lidar_annotate.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "pseudo-lidar-annotate",
+            "range": true,
+            "refId": "U"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"lidar-annotate.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "lidar-annotate",
+            "range": true,
+            "refId": "V"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"lidar-autoannot.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "lidar-autoannot",
+            "range": true,
+            "refId": "W"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"tl2d-detector.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "tl2d-detector",
+            "range": true,
+            "refId": "X"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"tl3d-detector.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "tl3d-detector",
+            "range": true,
+            "refId": "Y"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"saaai.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "saaai",
+            "range": true,
+            "refId": "Z"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"autotagger.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "autotagger",
+            "range": true,
+            "refId": "AA"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"dcp-rule-execution.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "dcp-rule-execution",
+            "range": true,
+            "refId": "AB"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"bevdepth-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "bevdepth",
+            "range": true,
+            "refId": "AC"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"flir-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "flir-X-gpu",
+            "range": true,
+            "refId": "AD"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"conan-to-saadaa.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "conan-to-saadaa",
+            "range": true,
+            "refId": "AE"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"realityfilter.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "realityfilter",
+            "range": true,
+            "refId": "AF"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"infra-smoke-test.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "infra-smoke-test",
+            "range": true,
+            "refId": "AG"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"run-aa.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "run-aa",
+            "range": true,
+            "refId": "AH"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"autoqc.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "autoqc",
+            "range": true,
+            "refId": "AI"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"autotag.*\",container=\"autotag\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "autotag",
+            "range": true,
+            "refId": "AJ"
+          }
+        ],
+        "title": "Memory usage per podtemplate",
+        "transformations": [],
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_DS_PROMETHEUS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": [],
+            "unit": "bytes"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 13,
+          "w": 7,
+          "x": 17,
+          "y": 14
+        },
+        "id": 2134,
+        "options": {
+          "displayLabels": [],
+          "legend": {
+            "displayMode": "list",
+            "placement": "right",
+            "showLegend": true,
+            "values": [
+              "percent"
+            ]
+          },
+          "pieType": "donut",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.3.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",id!=\"/\",pod=~\"aidrive-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "aidrive-X-gpu",
+            "range": true,
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"annotationloader-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "annotationloader",
+            "range": true,
+            "refId": "B"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"scorpio-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "scorpio-X-gpu",
+            "range": true,
+            "refId": "C"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"ros-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "ros-X-gpu",
+            "range": true,
+            "refId": "D"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"aidrive-build-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "aidrive-build",
+            "range": true,
+            "refId": "E"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"aisim-build-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "aisim-build",
+            "range": true,
+            "refId": "F"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"aisim-coverage-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "aisim-coverage",
+            "range": true,
+            "refId": "G"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"preproc-.*-cpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "preproc-X-cpu",
+            "range": true,
+            "refId": "H"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"bev-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "bev",
+            "range": true,
+            "refId": "I"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"hdmap.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "hdmap",
+            "range": true,
+            "refId": "J"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"trafficsign-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "trafficsign-X-gpu",
+            "range": true,
+            "refId": "K"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"cerberus.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "cerberus",
+            "range": true,
+            "refId": "L"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"roadmodel-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "roadmodel-X-gpu",
+            "range": true,
+            "refId": "M"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"ssd-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "ssd-X-gpu",
+            "range": true,
+            "refId": "N"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"pytorch-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "pytorch-X-gpu",
+            "range": true,
+            "refId": "O"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"backend-postprocess.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "backend-postprocess",
+            "range": true,
+            "refId": "P"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"field-test-postprocess.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "field-test-postprocess",
+            "range": true,
+            "refId": "Q"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"bbox3d-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "bbox-X-gpu",
+            "range": true,
+            "refId": "R"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"annotationloader.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "annotationloader",
+            "range": true,
+            "refId": "S"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"pseudo-lidar-annotate.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "pseudo-lidar-annotate",
+            "range": true,
+            "refId": "T"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"pseudo_lidar_annotate.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "pseudo-lidar-annotate",
+            "range": true,
+            "refId": "U"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"lidar-annotate.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "lidar-annotate",
+            "range": true,
+            "refId": "V"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"lidar-autoannot.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "lidar-autoannot",
+            "range": true,
+            "refId": "W"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"tl2d-detector.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "tl2d-detector",
+            "range": true,
+            "refId": "X"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"tl3d-detector.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "tl3d-detector",
+            "range": true,
+            "refId": "Y"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"saaai.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "saaai",
+            "range": true,
+            "refId": "Z"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"autotagger.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "autotagger",
+            "range": true,
+            "refId": "AA"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"dcp-rule-execution.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "dcp-rule-execution",
+            "range": true,
+            "refId": "AB"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"bevdepth-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "bevdepth",
+            "range": true,
+            "refId": "AC"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"flir-.*-gpu-.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "flir-X-gpu",
+            "range": true,
+            "refId": "AD"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"conan-to-saadaa.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "conan-to-saadaa",
+            "range": true,
+            "refId": "AE"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"realityfilter.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "realityfilter",
+            "range": true,
+            "refId": "AF"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"infra-smoke-test.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "infra-smoke-test",
+            "range": true,
+            "refId": "AG"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"run-aa.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "run-aa",
+            "range": true,
+            "refId": "AH"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"autoqc.*\",container=\"jnlp\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "autoqc",
+            "range": true,
+            "refId": "AI"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_memory_working_set_bytes{id!=\"/\",pod=~\"autotag.*\",container=\"autotag\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_memory_working_set_bytes)",
+            "hide": false,
+            "legendFormat": "autotag",
+            "range": true,
+            "refId": "AJ"
+          }
+        ],
+        "title": "Memory usage per podtemplate",
+        "transformations": [],
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_DS_PROMETHEUS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "left",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "stepBefore",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 17,
+          "x": 0,
+          "y": 27
+        },
+        "id": 2130,
+        "links": [],
+        "maxDataPoints": 100,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true
+          },
+          "timezone": [
+            ""
+          ],
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.3.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"aidrive-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "aidrive-X-gpu",
+            "range": true,
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"annotationloader-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "annotationloader",
+            "range": true,
+            "refId": "B"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"scorpio-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "scorpio-X-gpu",
+            "range": true,
+            "refId": "C"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"ros-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "ros-X-gpu",
+            "range": true,
+            "refId": "D"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"aidrive-build-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "aidrive-build",
+            "range": true,
+            "refId": "E"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"aisim-build-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "aisim-build",
+            "range": true,
+            "refId": "F"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"aisim-coverage-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "aisim-coverage",
+            "range": true,
+            "refId": "G"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"preproc-.*-cpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "preproc-X-cpu",
+            "range": true,
+            "refId": "H"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"bev-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "bev",
+            "range": true,
+            "refId": "I"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"hdmap.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "hdmap",
+            "range": true,
+            "refId": "J"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"trafficsign-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "trafficsign-X-gpu",
+            "range": true,
+            "refId": "K"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"cerberus.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "cerberus",
+            "range": true,
+            "refId": "L"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"roadmodel-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "roadmodel-X-gpu",
+            "range": true,
+            "refId": "M"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"ssd-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "ssd-X-gpu",
+            "range": true,
+            "refId": "N"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"pytorch-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "pytorch-X-gpu",
+            "range": true,
+            "refId": "O"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"backend-postprocess.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "backend-postprocess",
+            "range": true,
+            "refId": "P"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"field-test-postprocess.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "field-test-postprocess",
+            "range": true,
+            "refId": "Q"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"bbox3d-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "bbox-X-gpu",
+            "range": true,
+            "refId": "R"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"annotationloader.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "annotationloader",
+            "range": true,
+            "refId": "S"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"pseudo-lidar-annotate.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "pseudo-lidar-annotate",
+            "range": true,
+            "refId": "T"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"pseudo_lidar_annotate.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "pseudo-lidar-annotate",
+            "range": true,
+            "refId": "U"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"lidar-annotate.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "lidar-annotate",
+            "range": true,
+            "refId": "V"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"lidar-autoannot.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "lidar-autoannot",
+            "range": true,
+            "refId": "W"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"tl2d-detector.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "tl2d-detector",
+            "range": true,
+            "refId": "X"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"tl3d-detector.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "tl3d-detector",
+            "range": true,
+            "refId": "Y"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"saaai.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "saaai",
+            "range": true,
+            "refId": "Z"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"autotagger.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "autotagger",
+            "range": true,
+            "refId": "AA"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"dcp-rule-execution.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "dcp-rule-execution",
+            "range": true,
+            "refId": "AB"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"bevdepth-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "bevdepth",
+            "range": true,
+            "refId": "AC"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"flir-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "flir-X-gpu",
+            "range": true,
+            "refId": "AD"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"conan-to-saadaa.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "conan-to-saadaa",
+            "range": true,
+            "refId": "AE"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"realityfilter.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "realityfilter",
+            "range": true,
+            "refId": "AF"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"infra-smoke-test.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "infra-smoke-test",
+            "range": true,
+            "refId": "AG"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"run-aa.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "run-aa",
+            "range": true,
+            "refId": "AH"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_cpu_usage_seconds_total{pod=\"autoqc.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "autoqc",
+            "range": true,
+            "refId": "AI"
+          }
+        ],
+        "title": "GPU usage per podtemplate",
+        "transformations": [],
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_DS_PROMETHEUS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": [],
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 7,
+          "x": 17,
+          "y": 27
+        },
+        "id": 2135,
+        "links": [],
+        "maxDataPoints": 100,
+        "options": {
+          "legend": {
+            "displayMode": "list",
+            "placement": "right",
+            "showLegend": true,
+            "values": [
+              "percent"
+            ]
+          },
+          "pieType": "donut",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.3.2",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"aidrive-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "aidrive-X-gpu",
+            "range": true,
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"annotationloader-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "annotationloader",
+            "range": true,
+            "refId": "B"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"scorpio-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "scorpio-X-gpu",
+            "range": true,
+            "refId": "C"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"ros-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "ros-X-gpu",
+            "range": true,
+            "refId": "D"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"aidrive-build-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "aidrive-build",
+            "range": true,
+            "refId": "E"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"aisim-build-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "aisim-build",
+            "range": true,
+            "refId": "F"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"aisim-coverage-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "aisim-coverage",
+            "range": true,
+            "refId": "G"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"preproc-.*-cpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "preproc-X-cpu",
+            "range": true,
+            "refId": "H"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"bev-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "bev",
+            "range": true,
+            "refId": "I"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"hdmap.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "hdmap",
+            "range": true,
+            "refId": "J"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"trafficsign-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "trafficsign-X-gpu",
+            "range": true,
+            "refId": "K"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"cerberus.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "cerberus",
+            "range": true,
+            "refId": "L"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"roadmodel-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "roadmodel-X-gpu",
+            "range": true,
+            "refId": "M"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"ssd-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "ssd-X-gpu",
+            "range": true,
+            "refId": "N"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"pytorch-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "pytorch-X-gpu",
+            "range": true,
+            "refId": "O"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"backend-postprocess.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "backend-postprocess",
+            "range": true,
+            "refId": "P"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"field-test-postprocess.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "field-test-postprocess",
+            "range": true,
+            "refId": "Q"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"bbox3d-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "bbox-X-gpu",
+            "range": true,
+            "refId": "R"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"annotationloader.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "annotationloader",
+            "range": true,
+            "refId": "S"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"pseudo-lidar-annotate.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "pseudo-lidar-annotate",
+            "range": true,
+            "refId": "T"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"pseudo_lidar_annotate.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "pseudo-lidar-annotate",
+            "range": true,
+            "refId": "U"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"lidar-annotate.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "lidar-annotate",
+            "range": true,
+            "refId": "V"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"lidar-autoannot.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "lidar-autoannot",
+            "range": true,
+            "refId": "W"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"tl2d-detector.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "tl2d-detector",
+            "range": true,
+            "refId": "X"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"tl3d-detector.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "tl3d-detector",
+            "range": true,
+            "refId": "Y"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"saaai.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "saaai",
+            "range": true,
+            "refId": "Z"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"autotagger.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "autotagger",
+            "range": true,
+            "refId": "AA"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"dcp-rule-execution.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "dcp-rule-execution",
+            "range": true,
+            "refId": "AB"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"bevdepth-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "bevdepth",
+            "range": true,
+            "refId": "AC"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"flir-.*-gpu-.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "flir-X-gpu",
+            "range": true,
+            "refId": "AD"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"conan-to-saadaa.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "conan-to-saadaa",
+            "range": true,
+            "refId": "AE"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"realityfilter.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "realityfilter",
+            "range": true,
+            "refId": "AF"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"infra-smoke-test.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "infra-smoke-test",
+            "range": true,
+            "refId": "AG"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(kube_pod_container_resource_requests{pod=~\"run-aa.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "run-aa",
+            "range": true,
+            "refId": "AH"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum(container_cpu_usage_seconds_total{pod=\"autoqc.*\",node=~\"^$Node$\",resource=\"nvidia_com_gpu\"})",
+            "hide": false,
+            "legendFormat": "autoqc",
+            "range": true,
+            "refId": "AI"
+          }
+        ],
+        "title": "GPU usage per podtemplate",
+        "transformations": [],
+        "type": "piechart"
+      }
+    ],
+    "refresh": "10s",
+    "revision": 1,
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "allValue": ".*",
+          "current": {},
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_DS_PROMETHEUS}"
+          },
+          "definition": "label_values(kubernetes_io_hostname)",
+          "hide": 0,
+          "includeAll": true,
+          "multi": false,
+          "name": "Node",
+          "options": [],
+          "query": {
+            "query": "label_values(kubernetes_io_hostname)",
+            "refId": "StandardVariableQuery"
+          },
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "K8s / Node / Podtemplate",
+    "uid": "9d4SGu0Vk",
+    "version": 1,
+    "weekStart": ""
+  }

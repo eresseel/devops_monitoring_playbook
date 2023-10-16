@@ -1,0 +1,27 @@
+---
+- name: Install Grafana
+  hosts: grafana
+  gather_facts: true
+  become: true
+  collections:
+    - devops.devops_monitoring_collection
+  roles:
+    - role: ansible_role_grafana
+      vars:
+        grafana_is_install: "{{ install }}"
+        grafana_is_write_api_keys_in_file: "{{ write_api_keys_in_file }}"
+        grafana_version: "{{ version }}"
+        grafana_security:
+          admin_user: "{{ admin_user }}"
+          admin_password: "{{ admin_password }}"
+        grafana_datasources: "{{ datasource_list }}"
+        grafana_folders: "{{ folder_list }}"
+        grafana_dashboards: "{{ dashboard_list }}"
+
+- name: Install node-exporter
+  hosts: grafana
+  become: true
+  roles:
+    - role: UnderGreen.prometheus-node-exporter
+      vars:
+        prometheus_node_exporter_version: "{{ node_exporter_version }}"

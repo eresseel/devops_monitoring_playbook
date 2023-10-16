@@ -1,0 +1,298 @@
+---
+install: true
+write_api_keys_in_file: false
+version: grafana  # grafana=9.5.2
+admin_user: admin
+admin_password: 'admin123'
+datasource_list:
+  - name: 'DS_PROMETHEUS'
+    type: 'prometheus'
+    access: 'proxy'
+    url: 'https://prometheus.mycorp.com'
+    org_name: 'Main Org.'
+    is_default: false
+    tls_skip_verify: true
+  - name: 'dominator'
+    type: 'influxdb'
+    access: 'proxy'
+    database: 'dominator'
+    url: 'https://monitoring.mycorp.com:8086'
+    org_name: 'Main Org.'
+    is_default: false
+    tls_skip_verify: true
+  - name: 'gitlab'
+    type: 'influxdb'
+    access: 'proxy'
+    database: 'gitlab'
+    user: 'grafana'
+    url: 'https://monitoring.mycorp.com:8086'
+    org_name: 'Main Org.'
+    is_default: false
+    tls_skip_verify: true
+  - name: 'graphite'
+    type: 'influxdb'
+    access: 'proxy'
+    database: 'graphite'
+    url: 'https://monitoring.mycorp.com:8086'
+    org_name: 'Main Org.'
+    is_default: false
+    tls_skip_verify: true
+  - name: 'JENKINS'
+    type: 'influxdb'
+    access: 'proxy'
+    database: 'jenkins'
+    url: 'https://influxdb.mycorp.com'
+    org_name: 'Main Org.'
+    is_default: false
+    tls_skip_verify: true
+    basic_auth_user: "alma"
+    basic_auth_password: "korte"
+    json_data:
+      defaultBucket: "jenkins"
+      httpMode: "POST"
+      organization: "Devops"
+      tlsAuth: false
+      tlsAuthWithCACert: false
+      tlsSkipVerify: true
+      version: "Flux"
+  - name: 'TEMPO'
+    type: 'tempo'
+    access: 'proxy'
+    url: 'https://tempo-http.mycorp.com/'
+    org_name: 'Main Org.'
+    is_default: false
+    tls_skip_verify: true
+  - name: 'LOKI'
+    type: 'loki'
+    access: 'proxy'
+    url: 'https://loki-gateway.mycorp.com'
+    org_name: 'Main Org.'
+    is_default: false
+    tls_skip_verify: true
+
+  - name: 'kubernetes'
+    type: 'influxdb'
+    access: 'proxy'
+    database: 'kubernetes'
+    url: 'https://monitoring.mycorp.com:8086'
+    org_name: 'Main Org.'
+    is_default: false
+    tls_skip_verify: true
+  - name: 'SCORPIO'
+    type: 'influxdb'
+    access: 'proxy'
+    database: 'scorpio'
+    url: 'https://monitoring.mycorp.com:8086'
+    org_name: 'Main Org.'
+    is_default: false
+    tls_skip_verify: true
+  - name: 'titan_telegraf'
+    type: 'influxdb'
+    access: 'proxy'
+    database: 'titan_telegraf'
+    url: 'https://monitoring.mycorp.com:8086'
+    org_name: 'Main Org.'
+    is_default: false
+    tls_skip_verify: true
+  - name: 'vmware'
+    type: 'influxdb'
+    access: 'proxy'
+    database: 'vmware'
+    url: 'https://monitoring.mycorp.com:8086'
+    org_name: 'Main Org.'
+    is_default: false
+    tls_skip_verify: true
+  - name: 'NETWORK'
+    type: 'influxdb'
+    access: 'proxy'
+    database: 'network'
+    url: 'https://monitoring.mycorp.com:8086'
+    org_name: 'Main Org.'
+    is_default: false
+    tls_skip_verify: true
+folder_list:
+  - title: 'Alerts'
+    org_name: 'Main Org.'
+  - title: 'Jenkins'
+    org_name: 'Main Org.'
+  - title: 'Kubernetes'
+    org_name: 'Main Org.'
+  - title: 'Git'
+    org_name: 'Main Org.'
+  - title: 'Nvidia'
+    org_name: 'Main Org.'
+  - title: 'Nodes'
+    org_name: 'Main Org.'
+  - title: 'SSL'
+    org_name: 'Main Org.'
+  - title: 'Harbor'
+    org_name: 'Main Org.'
+dashboard_list:
+  - commit_message: 'Jenkins / Jobs / Timeline'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+      - name: 'TEMPO'
+    folder: 'Jenkins'
+    folder_path: 'files/grafana/dashboards/jenkins'
+    file: 'jenkins-jobs-timeline.json'
+  - commit_message: 'Jenkins / Views / Jobs'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Jenkins'
+    folder_path: 'files/grafana/dashboards/jenkins'
+    file: 'jenkins-node-jobs.json'
+  - commit_message: 'Jenkins / Views / Resources'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Jenkins'
+    folder_path: 'files/grafana/dashboards/jenkins'
+    file: 'jenkins-node-resources.json'
+
+  - commit_message: 'K8s / Namespace / Pods'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Kubernetes'
+    folder_path: 'files/grafana/dashboards/kubernetes'
+    file: 'k8s-namespace-pods.json'
+  - commit_message: 'K8s / Namespaces'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Kubernetes'
+    folder_path: 'files/grafana/dashboards/kubernetes'
+    file: 'k8s-namespaces.json'
+  - commit_message: 'K8s / Networking / Namespaces'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Kubernetes'
+    folder_path: 'files/grafana/dashboards/kubernetes'
+    file: 'k8s-networking-namespace-pods.json'
+  - commit_message: 'K8s / Node / Pods'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Kubernetes'
+    folder_path: 'files/grafana/dashboards/kubernetes'
+    file: 'k8s-node-pods.json'
+  - commit_message: 'K8s / Node / Podtemplate'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Kubernetes'
+    folder_path: 'files/grafana/dashboards/kubernetes'
+    file: 'k8s-node-podtemplate.json'
+  - commit_message: 'K8s / Node / Resources'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Kubernetes'
+    folder_path: 'files/grafana/dashboards/kubernetes'
+    file: 'k8s-node-resources.json'
+  - commit_message: 'K8s / Pods'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Kubernetes'
+    folder_path: 'files/grafana/dashboards/kubernetes'
+    file: 'k8s-pods.json'
+  - commit_message: 'K8s / Store / Volumes / Namespace'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Kubernetes'
+    folder_path: 'files/grafana/dashboards/kubernetes'
+    file: 'k8s-storage-volumes-namespace.json'
+  - commit_message: 'K8s / Store / Volumes'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Kubernetes'
+    folder_path: 'files/grafana/dashboards/kubernetes'
+    file: 'k8s-storage-volumes.json'
+  - commit_message: 'K8s / System / API Server'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Kubernetes'
+    folder_path: 'files/grafana/dashboards/kubernetes'
+    file: 'k8s-system-api-server.json'
+
+  - commit_message: 'Nvidia / Node / GPU / All'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Nvidia'
+    folder_path: 'files/grafana/dashboards/nvidia'
+    file: 'nvidia-node-gpu-all.json'
+  - commit_message: 'Nvidia / Node / GPU / Type / Slot'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Nvidia'
+    folder_path: 'files/grafana/dashboards/nvidia'
+    file: 'nvidia-node-gpu-type-slot.json'
+  - commit_message: 'Nvidia / Node / GPU / Type'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Nvidia'
+    folder_path: 'files/grafana/dashboards/nvidia'
+    file: 'nvidia-node-gpu-type.json'
+
+  - commit_message: 'Nodes / Baremetal / Resources'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'SCORPIO'
+    folder: 'Nodes'
+    folder_path: 'files/grafana/dashboards/nodes'
+    file: 'nodes-baremetal-resources.json'
+  - commit_message: 'Nodes / VM / Resources'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'NETWORK'
+    folder: 'Nodes'
+    folder_path: 'files/grafana/dashboards/nodes'
+    file: 'nodes-vm-resources.json'
+
+  - commit_message: 'SSL / Monitoring'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'SSL'
+    folder_path: 'files/grafana/dashboards/ssl'
+    file: 'ssl-monitoring.json'
+
+  - commit_message: 'GitLab / Workhorse'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Git'
+    folder_path: 'files/grafana/dashboards/git'
+    file: 'gitlab-workhorse.json'
+  - commit_message: 'GitLab / Sidekiq'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Git'
+    folder_path: 'files/grafana/dashboards/git'
+    file: 'gitlab-sidekiq.json'
+  - commit_message: 'Gerrit / Overview'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Git'
+    folder_path: 'files/grafana/dashboards/git'
+    file: 'gerrit-overview.json'
+
+  - commit_message: 'Harbor / Node / Resources'
+    org_name: 'Main Org.'
+    datasource_name:
+      - name: 'DS_PROMETHEUS'
+    folder: 'Harbor'
+    folder_path: 'files/grafana/dashboards/harbor'
+    file: 'harbor-node-resource.json'
