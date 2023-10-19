@@ -13,17 +13,20 @@ ansible-vault decrypt ./files/vagrant/id_rsa
 ## 2. Vagrant VM create
 ```bash
 vagrant up grafana
+vagrant up node-exporter
 ```
 
 ## 3. Development provision
 ```bash
 ansible-playbook -i ./inventories/development/hosts grafana.yml
+ansible-playbook -i ./inventories/development/hosts node_exporter.yml
 ```
 
 ## 4. Production provision
 ```bash
 ansible-vault decrypt ./inventories/production/group_vars/all/vault.yml
 ansible-playbook -i ./inventories/production/hosts grafana.yml
+ansible-playbook -i ./inventories/production/hosts node_exporter.yml
 ```
 
 ## 5. Vagrant VM destroy
