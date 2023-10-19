@@ -1,0 +1,26 @@
+---
+- name: Installing Build Tools
+  hosts: debian
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Update packages from repository
+      ansible.builtin.apt:
+        update_cache: yes
+
+- name: Installing Build Tools
+  hosts: alpine
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Bootstrap a host without python3 installed
+      ansible.builtin.raw: apk add python3
+
+- name: Install Node Exporter
+  hosts: alpine
+  gather_facts: true
+  become: true
+  collections:
+    - devops.devops_monitoring_collection
+  roles:
+    - role: ansible_role_node_exporter

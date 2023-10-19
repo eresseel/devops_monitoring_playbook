@@ -1,16 +1,4 @@
 ---
 roles:
-  - src: geerlingguy.ntp
-    version: 2.3.2
-  - src: geerlingguy.docker
-    version: 6.1.0
-  - src: geerlingguy.java
-    version: 2.3.1
-  - src: geerlingguy.jenkins
-    version: 4.3.0
-  - src: tecris.maven
-    version: v3.9.3
-  - src: UnderGreen.prometheus-node-exporter
-    version: v1.5.1
   - src: bdellegrazie.nginx_exporter
     version: v3.2.0

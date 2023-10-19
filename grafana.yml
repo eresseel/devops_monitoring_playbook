@@ -21,7 +21,7 @@
 - name: Install node-exporter
   hosts: grafana
   become: true
+  collections:
+    - devops.devops_monitoring_collection
   roles:
-    - role: UnderGreen.prometheus-node-exporter
-      vars:
-        prometheus_node_exporter_version: "{{ node_exporter_version }}"
+    - role: ansible_role_node_exporter

@@ -51,6 +51,18 @@ Vagrant.configure("2") do |config|
         :ssh => [
             { :vm_username => "vagrant", :ssh_key_path => "vagrant-files", :ssh_key_name => "id_rsa", :key_type => "rsa", :bit => 4096 }
         ]
+        }, {
+        :box => [
+            { :box_name => "generic/alpine318" }
+        ],
+        :vm_name => "node-exporter",
+        :hostname => "node-exporter",
+        :network => [
+            { :network_type => "private_network", :ip => "192.168.56.11" }
+        ],
+        :ssh => [
+            { :vm_username => "vagrant", :ssh_key_path => "vagrant-files", :ssh_key_name => "id_rsa", :key_type => "rsa", :bit => 4096 }
+        ]
         }
     ]
 
