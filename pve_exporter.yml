@@ -8,7 +8,7 @@
   roles:
     - role: ansible_role_pve_exporter
       vars:
-        proxmox_is_enterprise : "{{ is_enterprise }}"
+        proxmox_is_enterprise: "{{ is_enterprise }}"
         prometheus_pve_exporter_is_install: "{{ is_install }}"
         prometheus_pve_exporter_version: "{{ version }}"
         prometheus_pve_exporter_config: "{{ config }}"
