@@ -7,7 +7,6 @@ python3 -m venv .venv
 pip3 install -r requirements.txt
 ansible-galaxy collection install -r ./collections/requirements.yml -p ./collections
 ansible-galaxy role install -r ./roles/requirements.yml -p ./roles
-ansible-vault decrypt ./files/vagrant/id_rsa
 ```
 
 ## 2. Vagrant VM create
@@ -20,6 +19,7 @@ vagrant up node-exporter
 ```bash
 ansible-playbook -i ./inventories/development/hosts grafana.yml
 ansible-playbook -i ./inventories/development/hosts node_exporter.yml
+ansible-playbook -i ./inventories/development/hosts pve_exporter.yml
 ```
 
 ## 4. Production provision
@@ -27,9 +27,11 @@ ansible-playbook -i ./inventories/development/hosts node_exporter.yml
 ansible-vault decrypt ./inventories/production/group_vars/all/vault.yml
 ansible-playbook -i ./inventories/production/hosts grafana.yml
 ansible-playbook -i ./inventories/production/hosts node_exporter.yml
+ansible-playbook -i ./inventories/production/hosts pve_exporter.yml
 ```
 
 ## 5. Vagrant VM destroy
 ```bash
 vagrant destroy -f grafana
+vagrant destroy -f node-exporter
 ```

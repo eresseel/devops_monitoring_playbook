@@ -1,0 +1,9 @@
+---
+is_enterprise: false
+is_install: true
+version: 3.2.2
+
+config:
+  user: root@pam
+  password: "root123"
+  verify_ssl: false
